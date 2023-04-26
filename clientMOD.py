@@ -1,13 +1,14 @@
 from socket import * 
 import subprocess
-HOST = "192.168.198.236"
+#HOST = "192.168.198.236"
+HOST= "127.0.0.1"
 PORT = 1132
 
 s = socket(AF_INET, SOCK_STREAM)    # create a TCP socket 
 s.connect((HOST, PORT))
 
 #numero = s.recv(1024).decode('UTF-8')
-message="ciao bellooo"
+message="INIZIO COMUNICAZIONE CLIENT-SERVER"
 while True:
  
     # message sent to server

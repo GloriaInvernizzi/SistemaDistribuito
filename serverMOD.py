@@ -24,7 +24,8 @@ def manda_numero(c, num):
    
 #MAIN-------------------------------
 print_lock = threading.Lock()
-host = "192.168.198.236"
+#host = "192.168.198.236"
+host = "127.0.0.1"
 port = 1132
 s = socket(AF_INET, SOCK_STREAM)    # create a TCP socket  
 s.bind((host, port))  
@@ -52,6 +53,7 @@ while True:
       
       intervallo = int(input("Scegli l'intervallo di numeri: "))
       for i in range (intervallo):
+         print(i)
          manda_numero(c2, i)
          risultato = c2.recv(1024)
          print(str(i) + " è un numero primo? " + risultato.decode('UTF-8'))

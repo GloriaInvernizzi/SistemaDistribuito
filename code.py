@@ -9,8 +9,11 @@ def is_prime(n):
 import socket
 import json
 from socket import * 
+import sys
 
-HOST = "192.168.198.236"
+#nome_script, primo = sys.argv
+
+HOST = "127.0.0.1"
 PORT = 1140
 
 s = socket(AF_INET, SOCK_STREAM)    # create a TCP socket 
@@ -18,10 +21,13 @@ s.connect((HOST, PORT))
 
 print("code partito!")
 
+
 while True:
 	numero = s.recv(1024)
+	if not numero:
+		print('comunicazione conclusa')   
+		break
 	numero = numero.decode('UTF-8')
-
 	print("numero ", numero)
 	risultato = is_prime(numero)    
 
