@@ -29,6 +29,3 @@ while True:
 	s.send(risultato.encode('UTF-8'))
 
 s.close()
-    
-
-    

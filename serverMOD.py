@@ -19,12 +19,13 @@ def threaded( c ):
    c.close()
    
 def manda_numero(c, num):
+   num = str(num)
    c.send(num.encode('UTF-8'))
    
 #MAIN-------------------------------
 print_lock = threading.Lock()
 host = "192.168.198.236"
-port = 1126
+port = 1132
 s = socket(AF_INET, SOCK_STREAM)    # create a TCP socket  
 s.bind((host, port))  
 s.listen(5)                         #the number of concurrent connections which have not been accept()    
@@ -42,14 +43,16 @@ while True:
    # Start a new thread and return its identifier
    start_new_thread(threaded, (c,))
    
-   port = 1134
+   port = 1140
    s2 = socket(AF_INET, SOCK_STREAM)    # create a TCP socket  
    s2.bind((host, port))  
    s2.listen(5)                         #the number of concurrent connections which have not been accept()
    while True:
       c2, addr = s2.accept()
-      manda_numero(c2, "15")
-      print("15 mandato")
-      risultato = c2.recv(1024)
-      print(risultato.decode('UTF-8'))
+      
+      intervallo = int(input("Scegli l'intervallo di numeri: "))
+      for i in range (intervallo):
+         manda_numero(c2, i)
+         risultato = c2.recv(1024)
+         print(str(i) + " è un numero primo? " + risultato.decode('UTF-8'))
       c2.close()
