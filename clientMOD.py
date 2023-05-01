@@ -19,7 +19,7 @@ while True:
 
     # print the received message
     # here it would be a reverse of sent message
-    print('Received from the server :', str(data.decode('UTF-8')))
+    #print('Received from the server :', str(data.decode('UTF-8')))    --> mega output inutile,stampa il codice del code
     f= open("code.py","w")
     f.write(str(data.decode('UTF-8')))
     f.close()

@@ -7,31 +7,24 @@ def is_prime(n):
   
   
 import socket
-import json
 from socket import * 
-import sys
-
-#nome_script, primo = sys.argv
 
 HOST = "127.0.0.1"
-PORT = 1140
+PORT = 1120
 
 s = socket(AF_INET, SOCK_STREAM)    # create a TCP socket 
 s.connect((HOST, PORT))
-
+request="number"
+s.send(request.encode('UTF-8'))
 print("code partito!")
 
+numero = s.recv(1024)
+print("Numero ricevuto")
 
-while True:
-	numero = s.recv(1024)
-	if not numero:
-		print('comunicazione conclusa')   
-		break
-	numero = numero.decode('UTF-8')
-	print("numero ", numero)
+while numero!="":
 	risultato = is_prime(numero)    
-
-	#s.send(bytes(risultato, 'UTF-8'))
 	s.send(risultato.encode('UTF-8'))
+	numero = s.recv(1024)
+	numero = numero.decode('UTF-8')
 
-s.close()
+s.close()    

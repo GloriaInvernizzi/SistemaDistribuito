@@ -16,15 +16,13 @@ def threaded( c ):
       # send back string to client
       c.sendall(bytes_read.encode('UTF-8'))
    # connection closed
-   c.close()
-   
+   c.close()  
 def manda_numero(c, num):
    num = str(num)
    c.send(num.encode('UTF-8'))
-   
+
 #MAIN-------------------------------
 print_lock = threading.Lock()
-#host = "192.168.198.236"
 host = "127.0.0.1"
 port = 1132
 s = socket(AF_INET, SOCK_STREAM)    # create a TCP socket  
@@ -36,6 +34,7 @@ bytes_read = f.read(4096)
 
 while True:
    # establish connection with client
+   print("in ascolto....")
    c, addr = s.accept()
    # lock acquired by client
    print_lock.acquire()
@@ -47,14 +46,15 @@ while True:
    port = 1140
    s2 = socket(AF_INET, SOCK_STREAM)    # create a TCP socket  
    s2.bind((host, port))  
-   s2.listen(5)                         #the number of concurrent connections which have not been accept()
-   while True:
-      c2, addr = s2.accept()
-      
-      intervallo = int(input("Scegli l'intervallo di numeri: "))
-      for i in range (intervallo):
-         print(i)
-         manda_numero(c2, i)
-         risultato = c2.recv(1024)
-         print(str(i) + " è un numero primo? " + risultato.decode('UTF-8'))
-      c2.close()
+   s2.listen(5)                         #the max number of concurrent connections which have not been accept()
+   #while True:      # E' IL PROBLEMA: ciclo sempre vero non permetteva al server di ritornare in ascolto per nuovi client,
+   #BISOGNA TROVARE UN MODO PER USCIRE DA QUESTO LOOP
+   c2, addr = s2.accept()
+   
+   intervallo = int(input("Scegli l'intervallo di numeri: "))
+   for i in range (intervallo):
+      manda_numero(c2, i)
+      risultato = c2.recv(1024)
+      print(str(i) + " è un numero primo? " + risultato.decode('UTF-8'))
+   
+   c2.close()
