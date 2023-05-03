@@ -6,7 +6,7 @@ def thread(arg, c):
     print("thread iniziato")
     while True:
       request=c.recv(1024).decode('UTF-8')
-      #print(request)
+      print(request)
       if request== "code":
          send_code(c)
       elif request == "number":
