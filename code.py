@@ -4,8 +4,7 @@ def is_prime(n):
     if (n%i) == 0:
       return "False"
   return "True"
-  
-  
+
 import socket
 from socket import * 
 
@@ -18,13 +17,17 @@ request="number"
 s.send(request.encode('UTF-8'))
 print("code partito!")
 
-numero = s.recv(1024)
-print("Numero ricevuto")
+numero = s.recv(1024).decode()
+print("Numero ricevuto "+ numero)
+primi=[]
+for i in range (int(numero)):
+  risultato = is_prime(i)
+  if risultato == "True":
+    primi.append(i) 
 
-while numero!="":
-	risultato = is_prime(numero)    
-	s.send(risultato.encode('UTF-8'))
-	numero = s.recv(1024)
-	numero = numero.decode('UTF-8')
-
-s.close()    
+request="result"
+s.send(request.encode('UTF-8'))
+s.send(str(primi).encode('UTF-8'))
+request="close"
+s.send(request.encode('UTF-8'))
+s.close() 
